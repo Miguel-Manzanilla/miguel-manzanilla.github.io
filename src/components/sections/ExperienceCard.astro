@@ -1,0 +1,51 @@
+---
+import Card from '../Card.astro'
+import { Button } from '../ui/button'
+
+// Actualiza esta constante con tu experiencia
+export const EXPERIENCE = [
+  {
+    position: 'Desarrollador Full Stack',
+    company: 'VIEWNEXT',
+    start: 'Septiembre 2024',
+    end: 'Actualidad',
+    link: 'https://www.viewnext.com', // Asegúrate de que el enlace sea correcto
+  },
+  {
+    position: 'Desarrollador Java (Prácticas)',
+    company: 'VIEWNEXT',
+    start: 'Abril 2024',
+    end: 'Septiembre 2024',
+    link: 'https://www.viewnext.com', // Asegúrate de que el enlace sea correcto
+  },
+  {
+    position: 'Técnico de Redes (Prácticas)',
+    company: 'Servicomtel',
+    start: 'Marzo 2022',
+    end: 'Mayo 2022',
+    link: 'https://www.servicomtel.es', // Asegúrate de que el enlace sea correcto
+  },
+  // Agrega más experiencias si es necesario
+];
+---
+
+<Card colSpan="md:col-span-1" rowSpan="md:row-span-2" title="Experiencia">
+  <div class="mt-2 space-y-4">
+    {
+      EXPERIENCE.slice(0, 3).map((exp) => (
+        <div>
+          <h3 class="text-lg font-semibold">{exp.position}</h3>
+          <a class="text-sm text-primary" href={exp?.link ?? ''} target="_blank" rel="noreferrer">
+            {exp.company}
+          </a>
+          <p class="text-sm text-gray-600">
+            {exp.start} - {exp.end}
+          </p>
+        </div>
+      ))
+    }
+    <a href="/work">
+      <Button variant="link" className="pl-0"> Ver más </Button>
+    </a>
+  </div>
+</Card>

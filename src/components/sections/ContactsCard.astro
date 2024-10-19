@@ -1,0 +1,31 @@
+---
+import Card from '../Card.astro'
+import { LINKS } from '../../lib/constants'
+---
+
+<Card colSpan="md:col-span-1" rowSpan="md:row-span-4">
+  <div class="h-full">
+    <header class="flex items-center">
+      <h1 class="text-xl font-bold text-foreground">
+        ¡Hablemos y trabajemos juntos!
+      </h1>
+    </header>
+    <address class="mt-4 flex flex-col">
+      <h2 class="text-gray-500">Detalles de Contacto</h2><br>
+      <p class="text-xs">miguelmanzanillaocana@gmail.com</p><br> <!-- Tamaño de fuente ajustado aquí -->
+      <p>🇪🇸 Toledo, España 🇪🇸</p><br>
+      <p>608 77 90 59</p><br>
+    </address>
+    <div class="mt-4 flex w-fit flex-col">
+      <h2 class="text-gray-500">Redes Sociales</h2>
+      <ul>
+        <li>
+          <a href={LINKS.linkedin} target="_blank">LinkedIn</a>
+        </li>
+        <li>
+          <a href={LINKS.github} target="_blank">GitHub</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</Card>

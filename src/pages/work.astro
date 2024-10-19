@@ -1,0 +1,165 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import TopLayout from '../layouts/TopLayout.astro'
+import BottomLayout from '../layouts/BottomLayout.astro'
+
+const EXPERIENCE = [
+  {
+    start: 'Abril 2024',
+    end: 'Septiembre 2024',
+    company: 'VIEWNEXT',
+    position: 'Desarrollador Java (Prácticas)',
+    tasks: [
+      'Desarrollo de aplicaciones en Java.',
+      'Colaboración en proyectos de equipo.',
+      'Implementación de soluciones innovadoras.'
+    ],
+  },
+  {
+    start: 'Marzo 2022',
+    end: 'Mayo 2022',
+    company: 'Servicomtel (Talavera de la Reina)',
+    position: 'Técnico de redes (Prácticas)',
+    tasks: [
+      'Mantenimiento de redes y sistemas.',
+      'Soporte técnico a usuarios.',
+      'Documentación de procesos y procedimientos.'
+    ],
+  },
+];
+
+const EDUCATION = [
+  {
+    title: 'Grado Superior en Desarrollo de Aplicaciones Multiplataforma',
+    institution: 'IES Ribera del Tajo',
+    duration: '2022 - 2024'
+  },
+  {
+    title: 'Grado Medio en Sistemas Microinformáticos y Redes',
+    institution: 'IES Ribera del Tajo',
+    duration: '2020 - 2022'
+  },
+];
+
+const LANGUAGES = [
+  {
+    language: 'Castellano',
+    level: 'Nativo',
+  },
+  {
+    language: 'Inglés',
+    level: 'Nivel B1',
+  },
+];
+
+const TECH_SKILLS = [
+  'Java',
+  'Programación Android Studio',
+  'Python',
+  'Oracle Database',
+  'SQL',
+  'HTML5',
+  'CSS',
+  'JavaScript',
+  'Windows',
+  'Unix',
+  'PL-SQL',
+];
+---
+
+<BaseLayout title="Experiencia y Educación" description="Experiencia laboral y educación de Miguel Manzanilla Ocaña">
+  <main class="flex min-h-[80vh] flex-auto flex-col" transition:animate="fade">
+    <TopLayout>
+      <h2
+        class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0"
+      >
+        Experiencia Laboral
+      </h2>
+    </TopLayout>
+    <BottomLayout>
+      <ul>
+        {
+          EXPERIENCE.map((entry) => (
+            <li class="animate mt-4 border-b border-black/10 py-8 first-of-type:mt-0 first-of-type:pt-0 last-of-type:border-none dark:border-white/25">
+              <div class="mb-4 text-sm uppercase">
+                {entry.start} - {entry.end}
+              </div>
+              <a
+                href=""
+                class={`font-semibold text-primary`}
+              >
+                {entry.company}
+              </a>
+              <div class="text-sm font-semibold">{entry.position}</div>
+              <article class="prose dark:prose-invert">
+                {entry.tasks.map((i) => (
+                  <p>{i}</p>
+                ))}
+              </article>
+            </li>
+          ))
+        }
+      </ul>
+    </BottomLayout>
+
+    <TopLayout>
+      <h2
+        class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0 mt-10"
+      >
+        Educación
+      </h2>
+    </TopLayout>
+    <BottomLayout>
+      <ul>
+        {
+          EDUCATION.map((entry) => (
+            <li class="animate mt-4 border-b border-black/10 py-4 first-of-type:mt-0 first-of-type:pt-0 last-of-type:border-none dark:border-white/25">
+              <div class="text-sm font-semibold">{entry.title}</div>
+              <div class="text-sm">{entry.institution}</div>
+              <div class="text-sm">{entry.duration}</div>
+            </li>
+          ))
+        }
+      </ul>
+    </BottomLayout>
+
+    <TopLayout>
+      <h2
+        class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0 mt-10"
+      >
+        Idiomas
+      </h2>
+    </TopLayout>
+    <BottomLayout>
+      <ul>
+        {
+          LANGUAGES.map((lang) => (
+            <li class="animate mt-4 border-b border-black/10 py-2 first-of-type:mt-0 first-of-type:pt-0 last-of-type:border-none dark:border-white/25">
+              <div class="text-sm font-semibold">{lang.language}</div>
+              <div class="text-sm">{lang.level}</div>
+            </li>
+          ))
+        }
+      </ul>
+    </BottomLayout>
+
+    <TopLayout>
+      <h2
+        class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0 mt-10"
+      >
+        Habilidades Técnicas
+      </h2>
+    </TopLayout>
+    <BottomLayout>
+      <ul>
+        {
+          TECH_SKILLS.map((skill) => (
+            <li class="animate mt-4 border-b border-black/10 py-2 first-of-type:mt-0 first-of-type:pt-0 last-of-type:border-none dark:border-white/25">
+              <div class="text-sm">{skill}</div>
+            </li>
+          ))
+        }
+      </ul>
+    </BottomLayout>
+  </main>
+</BaseLayout>
