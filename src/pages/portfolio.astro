@@ -5,7 +5,6 @@ import TopLayout from '../layouts/TopLayout.astro'
 import BottomLayout from '../layouts/BottomLayout.astro'
 import ProjectCard from '../components/ProjectCard.astro'
 
-import { contentfulClient } from '../lib/contentful'
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
 import type { EntryFieldTypes } from 'contentful'
 
@@ -19,7 +18,7 @@ interface Project {
   }
 }
 
-const entries = await contentfulClient.getEntries<Project>({})
+
 ---
 
 <BaseLayout
@@ -36,19 +35,7 @@ const entries = await contentfulClient.getEntries<Project>({})
     </TopLayout>
     <BottomLayout size="xl">
       <div class="flex w-full flex-wrap justify-center gap-2">
-        {
-          entries.items.map((entry: any) => (
-            <ProjectCard
-              key={entry?.sys?.id}
-              href={entry?.fields?.website}
-              heading={entry?.fields?.name}
-              subheading={entry?.fields?.description}
-              imagePath={entry?.fields?.img?.fields?.file.url}
-              altText={entry?.fields?.img?.fields.title}
-              class="w-full sm:w-2/5"
-            />
-          ))
-        }
+
       </div>
     </BottomLayout>
   </main>
