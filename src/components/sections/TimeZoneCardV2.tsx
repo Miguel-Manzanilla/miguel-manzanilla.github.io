@@ -16,7 +16,7 @@ const Timezone = ({ timezone }) => {
 
   return (
     <div>
-      <time>{dateTime}</time>
+      <p className="text-3xl">{dateTime}</p>
       <p className="text-sm text-gray-500">🇪🇸 Madrid, España 🇪🇸</p>
     </div>
   );
