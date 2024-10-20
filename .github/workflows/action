@@ -1,0 +1,37 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Cambia esto si tu rama principal tiene un nombre diferente
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout el código
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Configurar Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'  # Utiliza la versión 20 de Node.js
+
+      # 3. Instalar dependencias
+      - name: Install dependencies
+        run: |
+          npm install  # O usa yarn si es tu gestor de paquetes
+
+      # 4. Construir el proyecto
+      - name: Build project
+        run: npm run build  # Asegúrate de que este comando sea correcto
+
+      # 5. Desplegar a GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist  # Ruta de la carpeta que quieres desplegar
