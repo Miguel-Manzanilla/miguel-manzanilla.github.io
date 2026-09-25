@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# El CV es un PDF de 205 KB: se ofrece para descarga, no para indexar.
+Disallow: /CV.pdf
+
+Sitemap: https://miguel-manzanilla.github.io/sitemap-index.xml

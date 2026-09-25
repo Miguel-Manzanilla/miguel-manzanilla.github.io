@@ -8,45 +8,24 @@ import ContactsCard from '../components/sections/ContactsCard.astro'
 import Now from '../components/sections/Now.astro'
 import CVCard from '../components/sections/CVCard.astro'
 import ExperienceCard from '../components/sections/ExperienceCard.astro'
-import TattooCard from '../components/sections/TattooCard.astro'
+import ProjectsCard from '../components/sections/ProjectsCard.astro'
 import StudyCard from '../components/sections/StudyCard.astro'
-// 
+import { SITE } from '../lib/site'
 ---
 
-<script>
-  import { stagger, spring, timeline, type TimelineDefinition } from 'motion'
-  import { loaderAnimation } from '../lib/constants'
+{
+  /*
+  Nota sobre animaciones: la entrada de las tarjetas la hace CSS
+  (`.card-animate` en globals.css) en lugar de JavaScript. Antes se usaba la
+  libreria `motion` desde un `<script>` para animar un loader a pantalla
+  completa, lo que retrasaba el primer render y dejaba la pagina en gris si el
+  script no llegaba a ejecutarse. Con CSS el contenido se ve siempre.
+*/
+}
 
-  const cards = document.querySelectorAll('.card-animate')
-
-  const sequence = [
-    loaderAnimation,
-    [
-      cards,
-      { y: ['40%', '0%'], opacity: [0, 1] },
-      {
-        at: '-0.1',
-        duration: 0.4,
-        delay: stagger(0.3),
-        easing: spring({ velocity: 100, stiffness: 50, damping: 10 }),
-      },
-    ],
-  ]
-
-  timeline(sequence as TimelineDefinition)
-</script>
-
-<BaseLayout
-  title="Miguel Manzanilla Ocaña - Desarrollador Full Stack"
-  description="Miguel Manzanilla Ocaña - Desarrollador Full Stack - Portafolio, Proyectos, CV, Sobre mí, Contacto, Zona Horaria, Ahora, Experiencia, Tatuajes, Estudios"
->
-  <div
-    slot="loader"
-    class="loader bg-darkslate-700 fixed bottom-0 left-0 right-0 top-0 z-50 flex h-screen w-screen items-center justify-center text-3xl font-black uppercase text-neutral-50"
-  >
-  </div>
+<BaseLayout title={SITE.TITLE} description={SITE.DESCRIPTION}>
   <main
-    class="relative m-auto grid w-full max-w-6xl gap-2 overflow-hidden p-2 sm:gap-2 sm:p-4 md:grid-cols-2 md:gap-3 md:p-6 lg:grid-cols-4 lg:grid-rows-8 lg:gap-4"
+    class="relative m-auto grid w-full max-w-6xl gap-2 p-2 sm:gap-2 sm:p-4 md:grid-cols-2 md:gap-3 md:p-6 lg:grid-cols-4 lg:grid-rows-8 lg:gap-4"
   >
     <IntroCard />
     <AboutMe />
@@ -56,7 +35,8 @@ import StudyCard from '../components/sections/StudyCard.astro'
       colSpan="md:col-span-1"
       rowSpan="md:row-span-2"
       title="Portafolio y Proyectos"
-      href="https://github.com/Miguel-Manzanilla?tab=repositories"
+      body="Juegos, apps Android, escritorio y scripts. Todo el código es público."
+      href="/portfolio"
     />
     <TimeZoneCard />
     <ContactsCard />
@@ -64,21 +44,13 @@ import StudyCard from '../components/sections/StudyCard.astro'
     <Card colSpan="md:col-span-1" rowSpan="md:row-span-1">
       <div class="flex h-full flex-col justify-between">
         <blockquote class="mt-6 border-l-2 pl-6 italic">
-          “Cualquier cosa que un hombre pueda imaginar, otros hombres pueden hacerla realidad.”
+          “Cualquier cosa que un hombre pueda imaginar, otros hombres pueden
+          hacerla realidad.”
         </blockquote>
         <p class="mt-2 text-xs">- Jules Verne</p>
       </div>
     </Card>
-    <TattooCard />
+    <ProjectsCard />
     <StudyCard />
-    <!-- <Card colSpan="md:col-span-1" rowSpan="md:row-span-1">
-      <p class="text-xs">
-        © 2023 · Elaborado con ♥️ usando <a
-          href="https://astro.build/"
-          target="_blank"
-          class="text-red-500">Astro</a
-        > por Gianmarco.
-      </p>
-    </Card> -->
   </main>
 </BaseLayout>

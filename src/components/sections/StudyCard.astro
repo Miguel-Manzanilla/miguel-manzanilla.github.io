@@ -1,32 +1,30 @@
 ---
 import Card from '../Card.astro'
 import { Badge } from '../ui/badge'
-
-// Definición de estudios
-const STUDIES = [
-  {
-    institution: 'IES Ribera del Tajo',
-    link: 'https://www.ejemplo.com/ies-ribera-del-tajo' // Cambia esto por el enlace correcto si es necesario
-  },
-  {
-    institution: 'IES Los Navalmorales',
-    link: 'https://www.ejemplo.com/ies-los-navalmorales' // Cambia esto por el enlace correcto si es necesario
-  },
-  {
-    institution: 'Udemy',
-    link: 'https://www.udemy.com/' // Cambia esto por el enlace correcto del curso o perfil de Udemy
-  },
-];
+import { STUDIES } from '../../lib/cv'
 ---
 
 <Card colSpan="md:col-span-1" rowSpan="md:row-span-1" title="Estudios">
-  <div class="mt-2 flex w-full flex-wrap items-center justify-center gap-2">
+  <ul class="mt-2 flex w-full flex-wrap items-center justify-center gap-2">
     {
       STUDIES.map((study) => (
-        <a href={study.link} target="__blank" rel="noopener noreferrer">
-          <Badge variant="outline">{study.institution}</Badge>
-        </a>
+        <li>
+          {study.link ? (
+            <a
+              href={study.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="rounded-full"
+            >
+              <Badge variant="outline">{study.institution}</Badge>
+            </a>
+          ) : (
+            // Sin web pública que enlazar: se muestra como texto, no como
+            // enlace roto. Antes todos apuntaban a 'ejemplo.com'.
+            <Badge variant="outline">{study.institution}</Badge>
+          )}
+        </li>
       ))
     }
-  </div>
+  </ul>
 </Card>

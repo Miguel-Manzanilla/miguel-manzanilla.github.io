@@ -1,17 +1,31 @@
 ---
 import Card from '../Card.astro'
 import Pulse from '../Pulse.astro'
+import { LINKS } from '../../lib/site'
 ---
 
 <Card colSpan="md:col-span-1" rowSpan="md:row-span-2" title="Ahora">
-  <div class="mb-2 flex w-full items-start justify-between">
+  <div class="mb-2 flex w-full items-start justify-between gap-2">
     <div class="flex flex-col">
-      <h2>Desarrollador Full Stack</h2>
-      <a href="https://sive.rs/nowff" target="_blank">
-        <span class="cursor-pointer text-xs text-gray-500">¿Qué es eso?</span>
+      <h3>Desarrollador Full Stack</h3>
+      <a
+        href="https://sive.rs/nowff"
+        target="_blank"
+        rel="noreferrer noopener"
+        class="w-fit text-xs text-muted-foreground underline-offset-2 hover:underline"
+      >
+        ¿Qué es eso?
       </a>
     </div>
     <Pulse />
   </div>
-  <p class="text-xs">Actualmente trabajo como desarrollador full stack en VIEWNEXT.</p>
+  <p class="text-xs">
+    Actualmente trabajo como desarrollador full stack en
+    <a
+      href={LINKS.viewnext}
+      target="_blank"
+      rel="noreferrer noopener"
+      class="underline-offset-2 hover:underline">VIEWNEXT</a
+    >.
+  </p>
 </Card>

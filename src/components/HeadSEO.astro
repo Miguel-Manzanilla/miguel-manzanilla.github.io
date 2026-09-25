@@ -1,45 +1,148 @@
 ---
 import '@/styles/globals.css'
 import '@/styles/fonts.css'
+import { SITE } from '../lib/site'
+import { PROJECTS } from '../lib/cv'
 
 interface Props {
-  title?: string | undefined
-  description?: string | undefined
-  ogImage?: URL | undefined
+  title?: string
+  description?: string
+  ogImage?: string
+  /** Activa los breadcrumbs de schema.org. */
+  breadcrumbs?: { name: string; href: string }[]
 }
+
+const {
+  title = SITE.TITLE,
+  description = SITE.DESCRIPTION,
+  ogImage = '/og-image.png',
+  breadcrumbs,
+} = Astro.props
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const ogImageURL = new URL(ogImage, Astro.site)
 
-if (Astro.props.ogImage === undefined) {
-  Astro.props.ogImage = new URL('View1.png', canonicalURL)
+/**
+ * El JSON-LD de Person va en todas las páginas: es lo que permite que Google
+ * entitle el resultado con tu nombre, rol y enlaces.
+ */
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE.DISPLAY_NAME,
+  url: Astro.site?.toString(),
+  email: `mailto:${SITE.EMAIL}`,
+  jobTitle: SITE.ROLE,
+  description: SITE.DESCRIPTION,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: SITE.LOCATION.city,
+    addressRegion: SITE.LOCATION.region,
+    addressCountry: SITE.LOCATION.country,
+  },
+  sameAs: [
+    'https://github.com/Miguel-Manzanilla',
+    'https://www.linkedin.com/in/miguel-manzanilla-ocaña-66327b280/',
+  ],
+  knowsAbout: [
+    'Java',
+    'JavaScript',
+    'TypeScript',
+    'Python',
+    'SQL',
+    'Astro',
+    'React',
+  ],
+  hasCredential: {
+    '@type': 'EducationalOccupationalCredential',
+    credentialCategory: 'degree',
+    name: 'Grado Superior en Desarrollo de Aplicaciones Multiplataforma',
+    recognizedBy: {
+      '@type': 'CollegeOrUniversity',
+      name: 'IES Ribera del Tajo',
+    },
+  },
+  subjectOf: PROJECTS.slice(0, 5).map((project) => ({
+    '@type': 'CreativeWork',
+    name: project.title,
+    description: project.description,
+    url: project.link,
+  })),
 }
 
-const { title, description, ogImage } = Astro.props
+const breadcrumbSchema = breadcrumbs && {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumbs.map((crumb, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: crumb.name,
+    item: new URL(crumb.href, Astro.site).toString(),
+  })),
+}
 ---
 
-<meta charset="utf-8" />
-<meta name="robots" content="index, follow" />
-<meta name="googlebot" content="index, follow" />
+<!--
+  El <meta charset> y el preload de la fuente los pone BaseLayout: deben ir
+  los primeros en <head> para que el navegador los interprete bien.
+-->
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
-<link rel="canonical" href={canonicalURL} />
-<link
-  rel="shortcut icon"
-  type="image/png+xml"
-  href={`${Astro.site}favicon.png`}
-/>
-<title>{title}</title>
-<meta name="title" content={title} />
-<meta name="description" content={description} />
+<meta name="author" content={SITE.DISPLAY_NAME} />
 
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Open Graph -->
 <meta property="og:type" content="website" />
+<meta property="og:site_name" content={SITE.DISPLAY_NAME} />
+<meta property="og:locale" content={SITE.LOCALE} />
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={ogImage} />
+<meta property="og:image" content={ogImageURL} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={`${SITE.DISPLAY_NAME} — ${SITE.ROLE}`} />
 
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={canonicalURL} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={ogImage} />
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageURL} />
+<meta
+  name="twitter:image:alt"
+  content={`${SITE.DISPLAY_NAME} — ${SITE.ROLE}`}
+/>
+
+<!-- Color de la barra de direcciones en móvil; cambia con el tema. -->
+<meta
+  name="theme-color"
+  content="#faf9f9"
+  media="(prefers-color-scheme: light)"
+/>
+<meta
+  name="theme-color"
+  content="#1c1917"
+  media="(prefers-color-scheme: dark)"
+/>
+
+<link rel="icon" type="image/png" href="/favicon.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<link rel="sitemap" href="/sitemap-index.xml" />
+
+<script
+  type="application/ld+json"
+  is:inline
+  set:html={JSON.stringify(personSchema)}
+/>
+{
+  breadcrumbSchema && (
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(breadcrumbSchema)}
+    />
+  )
+}

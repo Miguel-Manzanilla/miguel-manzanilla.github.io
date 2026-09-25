@@ -1,39 +1,53 @@
 ---
 import Card from '../Card.astro'
-import { Button } from '../ui/button'
-import { LINKS } from '../../lib/constants'
+import { buttonVariants } from '../ui/button'
+import { LINKS, SITE } from '../../lib/site'
 import { Linkedin, Github, Mail } from 'lucide-react'
+
+const SOCIALS = [
+  { href: LINKS.github, label: 'Perfil de GitHub', Icon: Github },
+  { href: LINKS.linkedin, label: 'Perfil de LinkedIn', Icon: Linkedin },
+  { href: LINKS.mail, label: 'Contacto por correo', Icon: Mail },
+] as const
 ---
 
 <Card colSpan="md:col-span-3" rowSpan="md:row-span-4">
   <div class="flex h-full w-full">
     <div class="flex flex-col justify-between gap-4 md:max-h-[300px]">
       <div class="flex h-full flex-col">
-        <h6 class="m-0 text-sm font-light text-gray-500">Bienvenido</h6>
-        <p class="m-0 text-xl font-light">
-          Hola, soy <b class="font-bold">Miguel Manzanilla Ocaña</b>, un desarrollador de software, técnico de sistemas microinformáticos y redes, y técnico superior en desarrollo de aplicaciones multiplataforma, con un fuerte enfoque en la experiencia del usuario, animaciones y microinteracciones. Me encanta crear interfaces bonitas y funcionales, tengo pasión por la tecnología y siempre busco nuevos desafíos.
-        </p>
+        <p class="m-0 text-sm font-light text-muted-foreground">Bienvenido</p>
+        <h1 class="m-0 text-xl font-light">
+          Hola, soy <b class="font-bold">{SITE.DISPLAY_NAME}</b>, desarrollador
+          full stack en <b class="font-bold">VIEWNEXT</b>. Me especializo en
+          crear interfaces bonitas y funcionales, con especial atención a la
+          experiencia de usuario, la accesibilidad y el rendimiento.
+        </h1>
       </div>
-      <div class="flex gap-4">
-        <a href={LINKS.github} aria-label="Perfil de GitHub" target="_blank">
-          <Button aria-label="Perfil de GitHub">
-            <Github />
-            <span class="sr-only">Perfil de GitHub</span>
-          </Button>
-        </a>
-        <a href={LINKS.linkedin} aria-label="Perfil de LinkedIn" target="_blank">
-          <Button aria-label="Perfil de LinkedIn">
-            <Linkedin />
-            <span class="sr-only">Perfil de LinkedIn</span>
-          </Button>
-        </a>
-        <a href={LINKS.mail} aria-label="Contacto por correo" target="_blank">
-          <Button aria-label="Contacto por correo">
-            <Mail />
-            <span class="sr-only">Contacto por correo</span>
-          </Button>
-        </a>
-      </div>
+      {
+        /*
+        Los botones son enlaces reales con las clases de buttonVariants, en vez
+        de <Button asChild> sobre un <a>. El patron asChild de Radix no
+        propagaba el className al enlace en Astro, y ademas anidaba un
+        <button> dentro de un <a>, que es HTML invalido.
+      */
+      }
+      <ul class="flex gap-4">
+        {
+          SOCIALS.map(({ href, label, Icon }) => (
+            <li>
+              <a
+                href={href}
+                aria-label={label}
+                target="_blank"
+                rel="noreferrer noopener"
+                class={buttonVariants({ variant: 'outline', size: 'icon' })}
+              >
+                <Icon className="size-5" aria-hidden="true" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
     </div>
     <img
       width="300"
@@ -41,6 +55,8 @@ import { Linkedin, Github, Mail } from 'lucide-react'
       src="/me.png"
       class="pointer-events-none absolute bottom-[-20px] right-[-110px] z-[-1] max-h-[300px] w-auto select-none opacity-50 md:relative md:bottom-auto md:right-auto md:z-auto md:opacity-100"
       alt="Miguel Manzanilla Ocaña, desarrollador de software"
+      loading="eager"
+      decoding="async"
     />
   </div>
 </Card>

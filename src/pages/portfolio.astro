@@ -1,45 +1,58 @@
 ---
-import { WORK } from '../lib/constants'
 import BaseLayout from '../layouts/BaseLayout.astro'
 import TopLayout from '../layouts/TopLayout.astro'
 import BottomLayout from '../layouts/BottomLayout.astro'
 import ProjectCard from '../components/ProjectCard.astro'
-
-import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
-import type { EntryFieldTypes } from 'contentful'
-
-interface Project {
-  contentTypeId: 'Projects'
-  fields: {
-    name: EntryFieldTypes.Text
-    img: EntryFieldTypes.AssetLink
-    website: EntryFieldTypes.EntryResourceLink<any>
-    repositorio: EntryFieldTypes.EntryResourceLink<any>
-  }
-}
-
-
+import { PROJECTS } from '../lib/cv'
+import { LINKS, SITE } from '../lib/site'
 ---
 
 <BaseLayout
-  title="Portafolio"
-  description="Proyectos y algunos clones que he hecho"
+  title={`Proyectos — ${SITE.NAME}`}
+  description="Proyectos personales y clones que he desarrollado: juegos, apps Android, aplicaciones de escritorio y scripts de Python."
+  breadcrumbs={[
+    { name: 'Inicio', href: '/' },
+    { name: 'Proyectos', href: '/portfolio' },
+  ]}
 >
   <main class="flex min-h-[80vh] flex-auto flex-col" transition:animate="slide">
     <TopLayout>
-      <h2
+      <h1
         class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0"
       >
-        Proyectos y clones
-      </h2>
+        Proyectos
+      </h1>
     </TopLayout>
-    <body>
 
-    </body>
     <BottomLayout size="xl">
-      <div class="flex w-full flex-wrap justify-center gap-2">
+      <ul class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          PROJECTS.map((project) => (
+            <li>
+              <ProjectCard
+                href={project.link}
+                heading={project.title}
+                subheading={project.tech}
+                altText={`Captura del proyecto ${project.title}`}
+              >
+                <p class="mt-1 text-sm text-muted-foreground">
+                  {project.description}
+                </p>
+              </ProjectCard>
+            </li>
+          ))
+        }
+      </ul>
 
-      </div>
+      <p class="mt-8 text-sm text-muted-foreground">
+        El código de todo lo que hay aquí es público. Puedes echarle un vistazo
+        en mi <a
+          href={LINKS.github}
+          target="_blank"
+          rel="noreferrer noopener"
+          class="text-primary underline underline-offset-4">perfil de GitHub</a
+        >.
+      </p>
     </BottomLayout>
   </main>
 </BaseLayout>

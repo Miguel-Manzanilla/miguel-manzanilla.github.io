@@ -1,32 +1,48 @@
 ---
 import { Card as ShadcnCard } from './ui/card'
 
-const {
-  as: Tag = 'a',
-  class: className,
-  href,
-  heading,
-  subheading,
-  imagePath,
-  altText,
-} = Astro.props
+/**
+ * Tarjeta de proyecto usada en /portfolio.
+ *
+ * `heading` y `subheading` son <h3> porque la pagina ya tiene un <h1>: antes
+ * eran <h1>/<h2>, lo que generaba varios h1 por pagina.
+ */
+interface Props {
+  href: string
+  heading: string
+  subheading?: string
+  altText?: string
+  imagePath?: string
+}
+
+const { href, heading, subheading, altText, imagePath } = Astro.props
 ---
 
-<Tag href={href} class={`${className}`} `>
-  <ShadcnCard
-    className={`transfor-y-[-40%] align-start perspective-1200 group relative flex-none transform justify-start overflow-hidden shadow-lg transition duration-75 ease-in-out ${href ? 'cursor-pointer hover:border-primary' : ''} `}
-  >
-    <img
-      src={imagePath}
-      alt={altText}
-      class="h-48 w-full rounded-2xl rounded-bl-none rounded-br-none object-cover"
-      loading="eager"
-    />
-    <div class="flex flex-col gap-y-0.5 px-5 py-4">
-      <h1 class="text-lg font-medium">{heading}</h1>
-      <h2 class="text-muted-foreground">{subheading}</h2>
-    </div>
+<ShadcnCard
+  class="group relative flex h-full flex-col overflow-hidden text-start shadow-lg transition duration-300 ease-in-out hover:border-primary"
+>
+  {
+    imagePath && (
+      <img
+        src={imagePath}
+        alt={altText ?? ''}
+        class="h-48 w-full rounded-2xl object-cover"
+        loading="lazy"
+        decoding="async"
+      />
+    )
+  }
 
+  <a
+    href={href}
+    target="_blank"
+    rel="noreferrer noopener"
+    class="flex h-full flex-col gap-y-0.5 p-5"
+  >
+    <h3 class="text-lg font-medium transition-colors group-hover:text-primary">
+      {heading}
+    </h3>
+    {subheading && <p class="text-sm text-muted-foreground">{subheading}</p>}
     <slot />
-  </ShadcnCard>
-</Tag>
+  </a>
+</ShadcnCard>

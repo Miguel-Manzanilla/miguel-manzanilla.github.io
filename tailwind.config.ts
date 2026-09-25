@@ -21,7 +21,10 @@ const config = {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         primary: {
-          DEFAULT: '#0000cd',
+          // Antes estaba fijado a '#0000cd' (azul), lo que hacia que los
+          // enlaces TUvieran un color distinto al resto del tema (naranja).
+          // Ahora sale de la variable CSS, asi que cambia con el tema oscuro.
+          DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
         },
         secondary: {

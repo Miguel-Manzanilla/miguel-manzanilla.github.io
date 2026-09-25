@@ -1,26 +1,33 @@
+---
+import { LINKS, SITE } from '../lib/site'
+
+const year = new Date().getFullYear()
+---
+
 <footer class="border-t py-6 md:px-8 md:py-0">
-  <div class="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
-    <p class="text-center text-sm leading-loose text-muted-foreground md:text-left">
-      Creado por{' '}
+  <div
+    class="container flex flex-col items-center justify-between gap-2 md:h-24 md:flex-row"
+  >
+    <p
+      class="text-center text-sm leading-loose text-muted-foreground md:text-left"
+    >
+      © {year}
+      {SITE.DISPLAY_NAME}. Con
+      <span aria-label="amor">❤️</span> usando
       <a
-        href="https://github.com/Miguel-Manzanilla"
+        href="https://astro.build/"
         target="_blank"
-        rel="noreferrer"
-        class="font-medium underline underline-offset-4"
+        rel="noreferrer noopener"
+        class="font-medium underline underline-offset-4">Astro</a
       >
-        Miguel Manzanilla
-      </a>
-      . Con <span class="text-red-500">❤️</span> usando Astro y Tailwind CSS. El
-      código fuente está disponible en{' '}
-      <a
-        href="https://github.com/Miguel-Manzanilla"
-        target="_blank"
-        rel="noreferrer"
-        class="font-medium underline underline-offset-4"
-      >
-        GitHub
-      </a>
-      .
+      y Tailwind CSS.
     </p>
+    <a
+      href={LINKS.github}
+      target="_blank"
+      rel="noreferrer noopener"
+      class="text-sm text-muted-foreground underline underline-offset-4"
+      >Código fuente en GitHub</a
+    >
   </div>
 </footer>

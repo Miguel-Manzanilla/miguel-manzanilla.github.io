@@ -1,29 +1,51 @@
 ---
 import Card from '../Card.astro'
-import { LINKS } from '../../lib/constants'
+import { LINKS, SITE } from '../../lib/site'
 ---
 
 <Card colSpan="md:col-span-1" rowSpan="md:row-span-4">
-  <div class="h-full">
-    <header class="flex items-center">
-      <h1 class="text-xl font-bold text-foreground">
-        ¡Hablemos y trabajemos juntos!
-      </h1>
-    </header>
-    <address class="mt-4 flex flex-col">
-      <h2 class="text-gray-500">Detalles de Contacto</h2><br>
-      <p class="text-xs">miguelmanzanillaocana@gmail.com</p><br> <!-- Tamaño de fuente ajustado aquí -->
-      <p>🇪🇸 Toledo, España 🇪🇸</p><br>
-      <p>608 77 90 59</p><br>
-    </address>
-    <div class="mt-4 flex w-fit flex-col">
-      <h2 class="text-gray-500">Redes Sociales</h2>
-      <ul>
+  <div class="flex h-full flex-col">
+    <h2 class="text-xl font-bold text-foreground">¡Hablemos!</h2>
+
+    <address class="mt-3 flex flex-col not-italic">
+      <h3 class="text-sm text-muted-foreground">Contacto</h3>
+      <ul class="mt-1 flex flex-col gap-1 text-sm">
         <li>
-          <a href={LINKS.linkedin} target="_blank">LinkedIn</a>
+          <a
+            href={LINKS.mail}
+            class="underline underline-offset-2 hover:text-primary"
+            >{SITE.EMAIL}</a
+          >
         </li>
         <li>
-          <a href={LINKS.github} target="_blank">GitHub</a>
+          <a
+            href="tel:+34608779059"
+            class="underline underline-offset-2 hover:text-primary"
+            >608 77 90 59</a
+          >
+        </li>
+        <li>🇪🇸 Toledo, España 🇪🇸</li>
+      </ul>
+    </address>
+
+    <div class="mt-4 flex flex-col">
+      <h3 class="text-sm text-muted-foreground">Redes sociales</h3>
+      <ul class="mt-1 flex flex-col gap-1 text-sm">
+        <li>
+          <a
+            href={LINKS.linkedin}
+            target="_blank"
+            rel="noreferrer noopener"
+            class="underline underline-offset-2 hover:text-primary">LinkedIn</a
+          >
+        </li>
+        <li>
+          <a
+            href={LINKS.github}
+            target="_blank"
+            rel="noreferrer noopener"
+            class="underline underline-offset-2 hover:text-primary">GitHub</a
+          >
         </li>
       </ul>
     </div>

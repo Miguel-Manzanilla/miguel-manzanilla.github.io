@@ -1,0 +1,36 @@
+# Formatea el codigo y comprueba que el proyecto compila.
+#
+# Sustituye a autofix.yml y autofix.ci, que estaban duplicados y ademas fijaban
+# Node 16 (obsoleto: Astro 4 y sus integraciones requieren Node 18+).
+name: Quality
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+
+      - name: Comprobar tipos
+        run: pnpm run check
+
+      - name: Comprobar formato
+        run: pnpm exec prettier --check .
+
+      - name: Compilar
+        run: pnpm run build

@@ -1,27 +1,36 @@
 ---
 import Card from '../Card.astro'
+import { SKILL_GROUPS } from '../../lib/cv'
 ---
 
 <Card colSpan="md:col-span-1" rowSpan="md:row-span-6" title="Sobre mí">
-  <div class="flex flex-col gap-2">
+  <div class="flex flex-col gap-3">
     <p class="text-sm font-light">
-      Hola, soy Miguel Manzanilla Ocaña, un desarrollador full stack que actualmente trabajo en VIEWNEXT. 🇪🇸
-      <br />
-      <br />
-      Mis herramientas principales incluyen:
-      <ul class="list-inside list-disc">
-        <li>Java</li>
-        <li>JavaScript</li>
-        <li>Python</li>
-        <li>SQL</li>
-        <li>HTML5</li>
-        <li>CSS</li>
-        <li>Android Studio</li>
-        <li>Node.js</li>
-      </ul>
+      Soy <b class="font-bold">Miguel Manzanilla Ocaña</b>, desarrollador full
+      stack. Actualmente trabajo en <b class="font-bold">VIEWNEXT</b>, donde me
+      dedico a construir interfaces web accesibles y con buen rendimiento.
     </p>
+
+    <div>
+      <h3 class="mb-1 text-sm font-semibold">Con lo que trabajo</h3>
+      <ul
+        class="list-inside list-disc text-sm font-light text-muted-foreground"
+      >
+        {
+          SKILL_GROUPS.map((group) => (
+            <li>
+              <span class="font-medium text-foreground">{group.label}:</span>{' '}
+              {group.skills.join(', ')}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
     <p class="text-sm font-light">
-      En mi tiempo libre, disfruto de pasar buenos momentos con mis amigos, ver películas y series, y aprender cosas nuevas. Además, me gusta "trastrear" con la informática, explorando nuevas tecnologías y herramientas.
+      En mi tiempo libre disfruto de estar con mis amigos, ver películas y
+      series, y trastear con la informática: probar tecnologías nuevas y
+      herramientas que no conozco.
     </p>
   </div>
 </Card>

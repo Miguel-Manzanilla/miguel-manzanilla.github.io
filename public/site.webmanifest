@@ -1,0 +1,18 @@
+{
+  "name": "Miguel Manzanilla Ocaña — Desarrollador Full Stack",
+  "short_name": "Miguel Manzanilla",
+  "description": "Portafolio de Miguel Manzanilla Ocaña, desarrollador full stack.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1c1917",
+  "theme_color": "#f97316",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

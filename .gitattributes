@@ -1,0 +1,19 @@
+# Normaliza los finales de linea en el repositorio.
+#
+# Sin esto, Git guardaba los .astro y .ts como LF pero los .yml como CRLF
+# (por el autocrlf de Windows), lo que hacia que el CI fallara el chequeo de
+# formato en Linux justo despues de pasar en local.
+* text=auto eol=lf
+
+# Los .bat y .cmd necesitan CRLF para funcionar en Windows.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Los ficheros binarios no se deben tocar.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff2 binary
+*.pdf binary

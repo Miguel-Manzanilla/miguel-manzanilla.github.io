@@ -2,109 +2,59 @@
 import BaseLayout from '../layouts/BaseLayout.astro'
 import TopLayout from '../layouts/TopLayout.astro'
 import BottomLayout from '../layouts/BottomLayout.astro'
-
-const EXPERIENCE = [
-  {
-    start: 'Abril 2024',
-    end: 'Septiembre 2024',
-    company: 'VIEWNEXT',
-    position: 'Desarrollador Java (Prácticas)',
-    tasks: [
-      'Desarrollo de aplicaciones en Java.',
-      'Colaboración en proyectos de equipo.',
-      'Implementación de soluciones innovadoras.'
-    ],
-  },
-  {
-    start: 'Marzo 2022',
-    end: 'Mayo 2022',
-    company: 'Servicomtel (Talavera de la Reina)',
-    position: 'Técnico de redes (Prácticas)',
-    tasks: [
-      'Mantenimiento de redes y sistemas.',
-      'Soporte técnico a usuarios.',
-      'Documentación de procesos y procedimientos.'
-    ],
-  },
-];
-
-const EDUCATION = [
-  {
-    title: 'Grado Superior en Desarrollo de Aplicaciones Multiplataforma',
-    institution: 'IES Ribera del Tajo',
-    duration: '2022 - 2024'
-  },
-  {
-    title: 'Grado Medio en Sistemas Microinformáticos y Redes',
-    institution: 'IES Ribera del Tajo',
-    duration: '2020 - 2022'
-  },
-];
-
-const LANGUAGES = [
-  {
-    language: 'Castellano',
-    level: 'Nativo',
-  },
-  {
-    language: 'Inglés',
-    level: 'Nivel B1',
-  },
-];
-
-const TECH_SKILLS = [
-  'Java',
-  'Programación Android Studio',
-  'Python',
-  'Oracle Database',
-  'SQL',
-  'HTML5',
-  'CSS',
-  'JavaScript',
-  'Windows',
-  'Unix',
-  'PL-SQL',
-];
+import { EDUCATION, EXPERIENCE, LANGUAGES, SKILL_GROUPS } from '../lib/cv'
+import { SITE } from '../lib/site'
 ---
 
-<BaseLayout title="Experiencia y Educación" description="Experiencia laboral y educación de Miguel Manzanilla Ocaña">
+<BaseLayout
+  title={`Experiencia y educación — ${SITE.NAME}`}
+  description={`Trayectoria profesional, estudios e idiomas de ${SITE.DISPLAY_NAME}, desarrollador full stack.`}
+  breadcrumbs={[
+    { name: 'Inicio', href: '/' },
+    { name: 'Experiencia', href: '/work' },
+  ]}
+>
   <main class="flex min-h-[80vh] flex-auto flex-col" transition:animate="fade">
     <TopLayout>
-      <h2
+      <h1
         class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0"
       >
         Experiencia Laboral
-      </h2>
+      </h1>
     </TopLayout>
     <BottomLayout>
-      <ul>
+      <ol class="flex flex-col">
         {
           EXPERIENCE.map((entry) => (
             <li class="animate mt-4 border-b border-black/10 py-8 first-of-type:mt-0 first-of-type:pt-0 last-of-type:border-none dark:border-white/25">
-              <div class="mb-4 text-sm uppercase">
-                {entry.start} - {entry.end}
-              </div>
-              <a
-                href=""
-                class={`font-semibold text-primary`}
-              >
-                {entry.company}
-              </a>
-              <div class="text-sm font-semibold">{entry.position}</div>
-              <article class="prose dark:prose-invert">
-                {entry.tasks.map((i) => (
-                  <p>{i}</p>
+              <p class="mb-2 text-sm uppercase text-muted-foreground">
+                {entry.start} — {entry.end}
+              </p>
+              <h2 class="text-lg font-semibold">
+                <a
+                  href={entry.link}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  class="text-primary underline underline-offset-4"
+                >
+                  {entry.company}
+                </a>
+              </h2>
+              <p class="text-sm font-medium">{entry.position}</p>
+              <ul class="mt-2 list-disc pl-5 text-sm text-muted-foreground">
+                {entry.tasks.map((task) => (
+                  <li>{task}</li>
                 ))}
-              </article>
+              </ul>
             </li>
           ))
         }
-      </ul>
+      </ol>
     </BottomLayout>
 
     <TopLayout>
       <h2
-        class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0 mt-10"
+        class="mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0"
       >
         Educación
       </h2>
@@ -114,9 +64,9 @@ const TECH_SKILLS = [
         {
           EDUCATION.map((entry) => (
             <li class="animate mt-4 border-b border-black/10 py-4 first-of-type:mt-0 first-of-type:pt-0 last-of-type:border-none dark:border-white/25">
-              <div class="text-sm font-semibold">{entry.title}</div>
-              <div class="text-sm">{entry.institution}</div>
-              <div class="text-sm">{entry.duration}</div>
+              <h3 class="text-sm font-semibold">{entry.title}</h3>
+              <p class="text-sm">{entry.institution}</p>
+              <p class="text-sm text-muted-foreground">{entry.duration}</p>
             </li>
           ))
         }
@@ -125,7 +75,7 @@ const TECH_SKILLS = [
 
     <TopLayout>
       <h2
-        class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0 mt-10"
+        class="mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0"
       >
         Idiomas
       </h2>
@@ -135,8 +85,8 @@ const TECH_SKILLS = [
         {
           LANGUAGES.map((lang) => (
             <li class="animate mt-4 border-b border-black/10 py-2 first-of-type:mt-0 first-of-type:pt-0 last-of-type:border-none dark:border-white/25">
-              <div class="text-sm font-semibold">{lang.language}</div>
-              <div class="text-sm">{lang.level}</div>
+              <h3 class="text-sm font-semibold">{lang.language}</h3>
+              <p class="text-sm text-muted-foreground">{lang.level}</p>
             </li>
           ))
         }
@@ -145,21 +95,28 @@ const TECH_SKILLS = [
 
     <TopLayout>
       <h2
-        class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0 mt-10"
+        class="mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0"
       >
         Habilidades Técnicas
       </h2>
     </TopLayout>
     <BottomLayout>
-      <ul>
+      <dl class="flex flex-col gap-4">
         {
-          TECH_SKILLS.map((skill) => (
-            <li class="animate mt-4 border-b border-black/10 py-2 first-of-type:mt-0 first-of-type:pt-0 last-of-type:border-none dark:border-white/25">
-              <div class="text-sm">{skill}</div>
-            </li>
+          SKILL_GROUPS.map((group) => (
+            <div>
+              <dt class="text-sm font-semibold">{group.label}</dt>
+              <dd class="mt-1 flex flex-wrap gap-2">
+                {group.skills.map((skill) => (
+                  <span class="rounded-full border px-3 py-1 text-xs">
+                    {skill}
+                  </span>
+                ))}
+              </dd>
+            </div>
           ))
         }
-      </ul>
+      </dl>
     </BottomLayout>
   </main>
 </BaseLayout>

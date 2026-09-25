@@ -1,7 +1,8 @@
 ---
 import ContentCard from './ContentCard.astro'
 import { Card as ShadcnCard } from './ui/card'
-import { SquareArrowOutUpRight } from 'lucide-react'
+import { SquareArrowOutUpRight, ChevronRight } from 'lucide-react'
+import { cn } from '../lib/utils'
 
 interface Props {
   title?: string
@@ -13,20 +14,40 @@ interface Props {
 }
 
 const { title, body, colSpan, rowSpan, href, colorText } = Astro.props
+const isExternal = href ? /^(https?:)?\/\//.test(href) : false
 ---
 
 <ShadcnCard
-  className={`card-animate transfor-y-[-40%] align-start perspective-1200 group group relative col-span-1 h-auto w-full flex-none transform justify-start overflow-hidden p-6 shadow-lg transition duration-75 ease-in-out ${
-    colSpan || 'md:col-span-2'
-  } ${rowSpan || ''} ${'cursor-pointer hover:border-primary'}`}
+  className={cn(
+    'card-animate group relative col-span-1 flex w-full flex-col justify-start overflow-hidden p-6 text-start shadow-lg transition duration-300 ease-in-out',
+    colSpan || 'md:col-span-2',
+    rowSpan,
+    href && 'cursor-pointer hover:border-primary',
+  )}
 >
   {
     href ? (
-      <a href={href} class={`block h-full w-full ${colorText || ' '}`}>
-        <SquareArrowOutUpRight
-          className="group-hover:text-primary position absolute right-6 "
-          size={20}
-        />
+      <a
+        href={href}
+        class={cn('block h-full w-full', colorText)}
+        target={isExternal ? '_blank' : undefined}
+        rel={isExternal ? 'noreferrer noopener' : undefined}
+      >
+        {isExternal ? (
+          <SquareArrowOutUpRight
+            className="absolute right-6 top-6 text-muted-foreground transition-colors group-hover:text-primary"
+            size={20}
+            aria-hidden="true"
+          />
+        ) : (
+          // Los enlaces internos tambien necesitan una pista visual de que
+          // llevan a otra pagina: la flecha de "abre en otra pestaña" no aplica.
+          <ChevronRight
+            className="absolute right-6 top-6 text-muted-foreground transition-colors group-hover:text-primary"
+            size={20}
+            aria-hidden="true"
+          />
+        )}
         <ContentCard title={title} body={body}>
           <slot />
         </ContentCard>

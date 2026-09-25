@@ -1,1 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+/*
+ * Inter se sirve desde el propio repo en vez de desde Google Fonts.
+ *
+ * Antes se cargaba con `@import url(...)` en el CSS, que es una de las formas
+ * mas lentas de cargar una fuente: el navegador no descubre la URL hasta que
+ * ya haParsed el CSS, y ademas anade una conexion de terceros. Alojandola aqui
+ * se resuelve en la misma conexion y se puede precargar.
+ */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-variable.woff2') format('woff2');
+}
